@@ -1,0 +1,38 @@
+from mysql.connector import Error
+while True :
+    name = input("Enter name :-")
+    hni = float(input("Enter hni :-"))
+    wm = input("Enter wm :-")
+    dic[ name] = [ hni , wm ]
+    a = input("Do you want to enter more records enter (Yes/ No) :- ")
+    if a == "No" or a == "no":
+        break
+for i in dic :
+    print()
+    print( dic[ i ][ 0 ] , "\t", "hni : ", dic[ i ][ 1 ] , "\t", "wm : ", dic[ i ][ 2 ])
+try:
+    connection = mysql.connector.connect(host='localhost',
+                                         database='electronics',
+                                         user='pynative',
+                                         password='pynative@#29')
+
+    sql_select_Query = "select * from mysql"
+    cursor = connection.cursor()
+    cursor.execute(sql_select_Query)
+    records = cursor.fetchall()
+    print("Total number of rows in table: ", cursor.rowcount)
+    print("\nPrinting each row")
+    for row in records:
+        print("user = ", row[0] )
+        print("hni = ", row[1])
+        print("wm = ", row[2])
+        print("Purchase date  = ", row[3], "\n")
+
+except mysql.connector.Error as e:
+    print("Error reading data from MySQL table", e)
+finally:
+    if connection.is_connected():
+        connection.close()
+        cursor.close()
+        print("MySQL connection is closed")
+
